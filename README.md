@@ -74,12 +74,6 @@ The system automatically generates and sends a daily sales report every 12 hours
 </br>
 
 
-### CLI call example
-
-
-
-</br>
-
 ## Example 1:
 
 </br>
