@@ -28,6 +28,8 @@ npm run start:dev
 
 > Note: You can use the tests located in the `main` folder of each service to verify the project
 
+Additionally, you need to install RabbitMQ. Please refer to the <a href="https://www.rabbitmq.com/docs/download">official RabbitMQ website</a> for installation instructions specific to your operating system.
+
 ## Docker
 
 Invoices Management System is very easy to install and deploy in a Docker container.
