@@ -1,0 +1,46 @@
+version: '3'
+services:
+  invoice-service:
+    build:
+      context: ./invoice-service
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./invoice-service:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - rabbitmq
+    command: npm run start:dev
+
+  email-sender:
+    build:
+      context: ./email-sender
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3001:3001'
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./email-sender:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - rabbitmq
+    command: npm run start:dev
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    command: >
+      bash -c "
+        rabbitmq-server &
+        sleep 10
+        rabbitmqctl add_user test test
+        rabbitmqctl set_user_tags test administrator
+        rabbitmqctl set_permissions -p / test '.*' '.*' '.*'
+        tail -f /dev/null
+      "
